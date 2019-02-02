@@ -44,7 +44,7 @@ gulp.task('babel', function() {
         entries: './src/js/main.js',
         debug: true
     })
-    .transform(babelify, { presets: ['env'] })
+    .transform(babelify, { presets: ['es2015'] })
     .on('error',gutil.log)
     .bundle()
     .on('error',gutil.log)

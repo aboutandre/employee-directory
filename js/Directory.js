@@ -3,11 +3,21 @@ class Directory {
         this.data = data;
     }
     generateDirectory() {
-        let directory;
-        for (let key in this.data) {
-            if (this.data.hasOwnProperty(key)) {
-                let employee = new Employee(this.data)
-            }
-        }
+        let directory = '';
+        // console.log("This is the 'this.data':");
+        // console.log(this.data);
+        this.data.forEach( function(element) {
+            // console.log("This is the current key:");
+            // console.log(element);
+            // console.log("This is the current index: " + i);
+            let newEmployee = new Employee(element);
+            let createdEmployee = newEmployee.createEmployee();
+            // console.log("This should be the HTML for the employee");
+            // console.log(createdEmployee);
+            directory += createdEmployee;
+        });
+        // }
+        $('#gallery').html(directory)
+        // return this.directory = directory;
     }
 }

@@ -1,18 +1,16 @@
-import $ from 'jquery';
-
 $(document).ready(function () {
 
     class Employee {
-        constructor(picture) {
-            // constructor(picture, firstName, lastName, email, city, state, gender: male) {
+        // constructor(picture) {
+            constructor(picture, firstName, lastName, email, city, state, gender: male) {
             this.pictureId = picture;
-            // this.firstName = firstName;
-            // this.lastName = lastName;
-            // this.email = email;
-            // this.city = city;
-            // this.state = state;
-            // this.gender = gender;
-            // this.employeeTemplate = employeeTemplate;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            this.city = city;
+            this.state = state;
+            this.gender = gender;
+            this.employeeTemplate = employeeTemplate;
         }
         createEmployee () {
             // let employeeCard = '<div class="card">';
@@ -21,11 +19,14 @@ $(document).ready(function () {
             <img class="card-img" src="${this.pictureId}" alt="profile picture">
         </div>
         `
-            // return employeePicture;
+            return employeePicture;
             // return this.employeeTemplate = employeePicture;
         }
         greet() {
-            // return `${this.pictureId} says hello.`;
+            return `${this.pictureId} says hello.`;
+        }
+        appendEmployee() {
+            $('#gallery').html(this.createEmployee());
         }
     }
 
@@ -50,8 +51,9 @@ $(document).ready(function () {
             // $('#gallery').html(employee1.createEmployee());
             let thisData = data.results;
 
-            // let emp1 = new Employee(data.results[0].picture.large);
-            // emp1.createEmployee();
+            let emp1 = new Employee(data.results[0].picture.large);
+            console.log(emp1.greet());
+            emp1.appendEmployee();
             // console.log(emp1.createEmployee());
             console.log(data.results[0].picture.large);
         }

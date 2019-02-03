@@ -1,20 +1,52 @@
+let employeeData = '';
+let totalEmployees = '';
+
 const openModal = function () {
     $(document).on('click', '.card', function () {
         let employeeNumber = $(this).data('employee-number');
         console.log("Card was clicked");
         console.log(employeeNumber);
-        let newModal = new Modal(employeeNumber);
-        let modal = newModal.createModal();
+        createModal(employeeNumber);
+    });
+};
 
-        $('body').append(modal);
+const createModal = function (employeeNumber) {
+    let newModal = new Modal(employeeNumber);
+    newModal.createModal();
+};
 
+const destroyModal = function (modal) {
+    $(modal).closest('.modal-container').remove();
+};
+
+const modalPrev = function () {
+    $(document).on('click', '#modal-prev', function () {
+        let employeeNumber = $(this).closest('.modal-container').attr('id');
+        if (employeeNumber <= 0) {
+            return
+        }
+        destroyModal($(this));
+        employeeNumber = parseInt(employeeNumber) - 1;
+        createModal(employeeNumber);
+    });
+};
+
+const modalNext = function () {
+    $(document).on('click', '#modal-next', function () {
+        let employeeNumber = $(this).closest('.modal-container').attr('id');
+        if (employeeNumber >= totalEmployees - 1) {
+            return
+        }
+        employeeNumber = parseInt(employeeNumber) + 1;
+        destroyModal($(this));
+        createModal(employeeNumber);
     });
 };
 
 const closeModal = function () {
 
     $(document).on('click', '#modal-close-btn', function () {
-        $(this).closest('.modal-container').remove();
+        destroyModal($(this));
     });
 
     $(document).keydown(function (e) {
@@ -24,7 +56,6 @@ const closeModal = function () {
     });
 };
 
-let employeeData = '';
 
 $(document).ready(function () {
     $.ajax({
@@ -39,34 +70,14 @@ $(document).ready(function () {
 
     function useReturnData(data) {
         employeeData = data;
+        totalEmployees = employeeData.length;
         let newDirectory = new Directory(data);
         newDirectory.generateDirectory();
         console.log(employeeData);
     };
 
-    let modal = `
-    <div class="modal-container">
-    <div class="modal">
-        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-        <div class="modal-info-container">
-            <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-            <h3 id="name" class="modal-name cap">name</h3>
-            <p class="modal-text">email</p>
-            <p class="modal-text cap">city</p>
-            <hr>
-            <p class="modal-text">(555) 555-5555</p>
-            <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-            <p class="modal-text">Birthday: 10/21/2015</p>
-        </div>
-    </div>
-
-    <div class="modal-btn-container">
-        <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-        <button type="button" id="modal-next" class="modal-next btn">Next</button>
-    </div>
-</div>
-    `
-    // $('body').append(modal);
     openModal();
     closeModal();
+    modalPrev();
+    modalNext();
 });

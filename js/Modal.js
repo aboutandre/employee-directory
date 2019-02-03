@@ -16,7 +16,7 @@ class Modal {
         console.log("Im being called from the Modal class");
         console.log(employeeData[this.employeeNumber]);
         let modalTemplate = ` 
-        <div class="modal-container">
+        <div class="modal-container" id="${this.employeeNumber}">
             <div class="modal">
                 <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                 <div class="modal-info-container">
@@ -26,7 +26,7 @@ class Modal {
                 <p class="modal-text cap">${this.employeeCity}</p>
                 <hr>
                 <p class="modal-text">${this.employeeCell}</p>
-                <p class="modal-text">${this.employeeStreet}, ${this.employeeState}, ${this.employeePostcode}</p>
+                <p class="modal-text cap">${this.employeeStreet}, ${this.employeeState}, ${this.employeePostcode}</p>
                 <p class="modal-text">Birthday: ${this.DobFormatter(this.employeeDob)}</p>
             </div>
         </div>
@@ -36,10 +36,23 @@ class Modal {
             <button type="button" id="modal-next" class="modal-next btn">Next</button>
         </div>
         `
-        return modalTemplate;
+        $('body').append(modalTemplate);
+
     }
     DobFormatter(dob) {
         let formattedDob = dob.replace(/T.*$/gm, '');
         return formattedDob;
     }
+    // modalPrev() {
+    //     $(document).on('click', '#modal-prev', function () {
+    //         if (this.employeeNumber <= 0) {
+    //             return
+    //         }
+    //         console.log('I will show a previous employee');
+    //         this.employeeNumber -= 1;
+    //         let newModal = new Modal(employeeNumber);
+    //         let modal = newModal.createModal();    
+    //         $('body').append(modal);
+    //     });
+    // }
 }

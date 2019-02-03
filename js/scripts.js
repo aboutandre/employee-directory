@@ -1,5 +1,6 @@
 let employeeData = '';
 let totalEmployees = '';
+let newSearch = '';
 
 const openModal = function () {
     $(document).on('click', '.card', function () {
@@ -10,10 +11,25 @@ const openModal = function () {
     });
 };
 
+// Make jQuery :contains Case-Insensitive - via "https://css-tricks.com/snippets/jquery/make-jquery-contains-case-insensitive/"
+$.expr[":"].contains = $.expr.createPseudo(function (arg) {
+    return function (elem) {
+        return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+    };
+});
+
 const createModal = function (employeeNumber) {
     let newModal = new Modal(employeeNumber);
     newModal.createModal();
 };
+
+const search = function () {
+    $(document).on('change paste keyup', '#search-input', function () {
+        let filter = $(this).val();
+        newSearch.listFilter(filter);
+    })
+};
+
 
 const destroyModal = function (modal) {
     $(modal).closest('.modal-container').remove();
@@ -60,7 +76,6 @@ const closeModal = function () {
 $(document).ready(function () {
     $.ajax({
         url: 'https://randomuser.me/api/?results=12&nat=us,de,fr,gb,br',
-        // url: 'https://randomuser.me/api/?inc=id,dob,picture,name,email,location,cell&results=12&nat=us,de,fr,gb,br',
         dataType: 'json',
         success: function (data) {
             useReturnData(data.results)
@@ -73,6 +88,8 @@ $(document).ready(function () {
         totalEmployees = employeeData.length;
         let newDirectory = new Directory(data);
         newDirectory.generateDirectory();
+        newSearch = new Search(data);
+        newSearch.addSearch();
         console.log(employeeData);
     };
 
@@ -80,4 +97,5 @@ $(document).ready(function () {
     closeModal();
     modalPrev();
     modalNext();
+    search();
 });

@@ -1,0 +1,45 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+header h1 {
+    display: block;
+    font-size: 2em;
+    margin: 0;
+    padding: 1em 0.25em;
+    text-align: center;
+}
+
+.search-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 1em 0.25em;
+}
+
+@media (min-width: 768px) {
+    header h1 {
+        text-align: left;
+    }
+
+    .search-container {
+        margin-top: 0;
+        justify-content: end;
+    }
+}
+
+.search-input {
+    border-radius: 0.5rem;
+    line-height: 2em;
+    max-width: none;
+    width: 360px;
+}
+
+.search-input:hover {
+    border-color: rgb(23, 162, 241);
+}
+
+.search-input:focus {
+    border-color: rgb(23, 162, 241);
+    box-shadow: 0 0 8px rgb(23, 162, 241, 0.5);
+}

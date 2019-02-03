@@ -2,7 +2,7 @@
    Public API Request
 ======================================== */
 
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+/* @import url('https://fonts.googleapis.com/css?family=Nunito'); */
 
 * {
 	box-sizing: border-box;
@@ -14,7 +14,7 @@ html, body {
 }
 
 body {
-    font-family: "Nunito", sans-serif;
+    /* font-family: "Nunito", sans-serif; */
     text-align: center;
     background: rgba(235, 235, 235, 0.9);
 }
@@ -28,11 +28,11 @@ header {
     margin: auto;
 }
 
-header h1 {
+/* header h1 {
     font-size: 1.25em;
     color: rgba(50, 50, 50, 0.9);
     margin-top: 35px;
-}
+} */
 
 .search-input {
     padding: 0.4rem 1rem;
@@ -230,9 +230,9 @@ header h1 {
         text-align: left;
     }
 
-    .search-container {
+    /* .search-container {
         margin-top: 25px;
-    }
+    } */
 
     .modal {
         margin-top: 100px;

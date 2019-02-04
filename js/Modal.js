@@ -1,4 +1,12 @@
+/**
+ * Class to create a modal based on the selected user
+ */
 class Modal {
+    /**
+     * Constructor accepts one parameter and that is the number of the selected employee
+     * With this number we can create the modal, based on the employee data.
+     * @param {Object} employeeNumber 
+     */
     constructor(employeeNumber) {
         this.employeeNumber = employeeNumber;
         this.employeePicture = employeeData[this.employeeNumber].picture.large;
@@ -12,9 +20,12 @@ class Modal {
         this.employeeCell = employeeData[this.employeeNumber].cell;
         this.employeeDob = employeeData[this.employeeNumber].dob.date;
     }
+    /**
+     * createModal()
+     * Method that accepts all the data from the object and populates the template
+     * if the corresponding employee data
+     */
     createModal() {
-        console.log("Im being called from the Modal class");
-        console.log(employeeData[this.employeeNumber]);
         let modalTemplate = ` 
         <div class="modal-container" id="${this.employeeNumber}">
             <div class="modal">
@@ -27,7 +38,7 @@ class Modal {
                 <hr>
                 <p class="modal-text">${this.employeeCell}</p>
                 <p class="modal-text cap">${this.employeeStreet}, ${this.employeeState}, ${this.employeePostcode}</p>
-                <p class="modal-text">Birthday: ${this.DobFormatter(this.employeeDob)}</p>
+                <p class="modal-text">Birthday: ${this.dobFormatter(this.employeeDob)}</p>
             </div>
         </div>
 
@@ -36,23 +47,16 @@ class Modal {
             <button type="button" id="modal-next" class="modal-next btn">Next</button>
         </div>
         `
+        // At the end we append the modal to the body
         $('body').append(modalTemplate);
 
     }
-    DobFormatter(dob) {
+    /**
+     * We beautify the data from the date of birthday received by the API
+     * @param {return} formattedDob 
+     */
+    dobFormatter(dob) {
         let formattedDob = dob.replace(/T.*$/gm, '');
         return formattedDob;
     }
-    // modalPrev() {
-    //     $(document).on('click', '#modal-prev', function () {
-    //         if (this.employeeNumber <= 0) {
-    //             return
-    //         }
-    //         console.log('I will show a previous employee');
-    //         this.employeeNumber -= 1;
-    //         let newModal = new Modal(employeeNumber);
-    //         let modal = newModal.createModal();    
-    //         $('body').append(modal);
-    //     });
-    // }
 }

@@ -43,3 +43,10 @@ header h1 {
     border-color: rgb(23, 162, 241);
     box-shadow: 0 0 8px rgb(23, 162, 241, 0.5);
 }
+
+.modal-prev:disabled,
+.modal-next:disabled {
+    background-color: #c0c0c0;
+    color: #fcfcfc;
+    cursor: not-allowed;
+}

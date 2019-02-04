@@ -5,6 +5,7 @@
 let employeeData = '';
 let totalEmployees = '';
 let newSearch = '';
+let newModal = '';
 
 /**
  * openModal()
@@ -31,7 +32,7 @@ $.expr[":"].contains = $.expr.createPseudo(function (arg) {
  * Function that creates a modal with the passed employee number
  */
 const createModal = function (employeeNumber) {
-    let newModal = new Modal(employeeNumber);
+    newModal = new Modal(employeeNumber);
     newModal.createModal();
 };
 
@@ -48,68 +49,25 @@ const search = function () {
 };
 
 /**
- * destroyModal(modal)
- * @param {object} modal
+ * destroyModal()
  * Function that will remove the modal for the passed object
  */
-const destroyModal = function (modal) {
-    $(modal).closest('.modal-container').remove();
+const destroyModal = function () {
+    newModal.destroyModal();
 };
 
 /**
  * Function that will navigate inside the modal window to the previous employee
  */
-const modalPrev = function () {
-    $(document).on('click', '#modal-prev', function () {
-        // The employee number is attached to the "id" of the modal container
-        let employeeNumber = $(this).closest('.modal-container').attr('id');
-        employeeNumber = parseInt(employeeNumber);
-        let previousEmployee = employeeNumber - 1;
-        // We will look for previous employees as long as we dont hit the first employee on the directory
-        while (previousEmployee >= 0) {
-            // Conditional to check if the previous employee has been filtered
-            if ($(`[data-employee-number='${previousEmployee}']`).hasClass('filtered')) {
-                // If yes, then subtract one to the current employee number and run the loop again
-                previousEmployee--;
-            } else {
-                // If the previous employee has not been filtered
-                // Destroy the modal
-                destroyModal($(this));
-                // Create a new modal for this employee
-                createModal(previousEmployee);
-                // Break out of the loop
-                break;
-            }
-        }
-    });
-};
-/**
- * Function that will navigate inside the modal window to the next employee
- */
-const modalNext = function () {
+const navigateModal = function () {
     $(document).on('click', '#modal-next', function () {
-        // The employee number is attached to the "id" of the modal container
-        let employeeNumber = $(this).closest('.modal-container').attr('id');
-        employeeNumber = parseInt(employeeNumber);
-        let nextEmployee = employeeNumber + 1;
-        // We will look for previous employees as long as we dont hit the last employee on the directory
-        while (nextEmployee < totalEmployees) {
-            // Conditional to check if the next employee has been filtered
-            if ($(`[data-employee-number='${nextEmployee}']`).hasClass('filtered')) {
-                // If yes, then add one to the current employee number and run the loop again
-                nextEmployee++;
-            } else {
-                // If the next employee has not been filtered
-                // Destroy the modal
-                destroyModal($(this));
-                // Create a new modal for this employee
-                createModal(nextEmployee);
-                // Break out of the loop
-                break;
-            }
-        }
+        newModal.navigateNextEmployee();
+    });
+    $(document).on('click', '#modal-prev', function () {
+        newModal.navigatePreviousEmployee();
     });
 };
+
 /**
  * Function to close the modal
  */
@@ -117,13 +75,13 @@ const closeModal = function () {
     // Listener to see if the "#modal-close-btn" has been clicked
     $(document).on('click', '#modal-close-btn', function () {
         // If yes, destroy the current modal
-        destroyModal($(this));
+        destroyModal();
     });
     // Listener to see if the "Escape" key has been pressed.
     $(document).keydown(function (e) {
         if (e.which === 27) {
             // Doing so will destroy the modal
-            $('.modal-container').remove();
+            destroyModal();
         }
     });
 };
@@ -164,7 +122,6 @@ $(document).ready(function () {
     // We call all the functions we need when the document is ready
     openModal();
     closeModal();
-    modalPrev();
-    modalNext();
+    navigateModal();
     search();
 });

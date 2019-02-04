@@ -13,7 +13,7 @@ class Directory {
     generateDirectory() {
         // Variable that will be used to create the template for employees
         let directory = '';
-        this.data.forEach( function(element, index) {
+        this.data.forEach(function (element, index) {
             let newEmployee = new Employee(element, index);
             let createdEmployee = newEmployee.createEmployee();
             // At the end of the loop we concatenate the employees in the template

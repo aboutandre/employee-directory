@@ -1,12 +1,20 @@
+/**
+ * Global variables that need to be accessed from inside other functions
+ */
+
 let employeeData = '';
 let totalEmployees = '';
 let newSearch = '';
 
+/**
+ * openModal()
+ * @template - Function that opens the modal for the employee that was clicked
+ */
 const openModal = function () {
     $(document).on('click', '.card', function () {
+        // We fetch the employee number that was stored in the `data-employee-number` attribute
         let employeeNumber = $(this).data('employee-number');
-        console.log("Card was clicked");
-        console.log(employeeNumber);
+        // The number is used to create a modal with the corresponding data
         createModal(employeeNumber);
     });
 };
@@ -17,12 +25,21 @@ $.expr[":"].contains = $.expr.createPseudo(function (arg) {
         return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
     };
 });
-
+/**
+ * createModal()
+ * @param {number} - The employee number
+ * Function that creates a modal with the passed employee number
+ */
 const createModal = function (employeeNumber) {
     let newModal = new Modal(employeeNumber);
     newModal.createModal();
 };
 
+/**
+ * search()
+ * @return {string} - Return queried string
+ * Calls the method `listFilter` with the passed query into the Search class
+ */
 const search = function () {
     $(document).on('change paste keyup', '#search-input', function () {
         let filter = $(this).val();
@@ -30,18 +47,28 @@ const search = function () {
     })
 };
 
-
+/**
+ * destroyModal(modal)
+ * @param {object} modal
+ * Function that will remove the modal for the passed object
+ */
 const destroyModal = function (modal) {
     $(modal).closest('.modal-container').remove();
 };
 
+/**
+ * Function that will navigate inside the modal window to the previous element
+ */
 const modalPrev = function () {
     $(document).on('click', '#modal-prev', function () {
         let employeeNumber = $(this).closest('.modal-container').attr('id');
+        // Conditional to check if we are already in the last item/employee
         if (employeeNumber <= 0) {
             return
         }
+        // If we are not we destroy the current modal
         destroyModal($(this));
+        // We subtract the current employee number
         employeeNumber = parseInt(employeeNumber) - 1;
         createModal(employeeNumber);
     });
@@ -71,7 +98,6 @@ const closeModal = function () {
         }
     });
 };
-
 
 $(document).ready(function () {
     $.ajax({
